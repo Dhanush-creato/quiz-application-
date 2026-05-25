@@ -1,0 +1,26 @@
+# ─── Environment / Secrets ──────────────────────────
+# NEVER commit .env files (they contain passwords & secrets)
+.env
+.env.local
+.env.production
+.env.*.local
+
+# ─── Frontend ───────────────────────────────────────
+frontend/node_modules/
+frontend/build/
+frontend/.DS_Store
+
+# ─── Backend ────────────────────────────────────────
+backend/target/
+backend/token.json
+*.jar
+*.class
+
+# ─── IDE ────────────────────────────────────────────
+.idea/
+*.iml
+.vscode/
+
+# ─── OS ─────────────────────────────────────────────
+.DS_Store
+Thumbs.db

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 
 export default function LoginPage() {
@@ -8,6 +8,8 @@ export default function LoginPage() {
   const [loading, setLoading] = useState(false);
   const { login } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from || null;
 
   const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
 
@@ -27,7 +29,8 @@ export default function LoginPage() {
     setLoading(true);
     try {
       const user = await login(form.username, form.password);
-      if (user.roles?.includes('ROLE_ADMIN')) navigate('/admin');
+      if (from) navigate(from, { replace: true });
+      else if (user.roles?.includes('ROLE_ADMIN')) navigate('/admin');
       else navigate('/categories');
     } catch (err) {
       setError(extractError(err));

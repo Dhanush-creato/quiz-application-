@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { useAuth } from './context/AuthContext';
 
 import Navbar from './components/Navbar';
@@ -15,11 +15,13 @@ import AdminQuestions from './pages/admin/AdminQuestions';
 import AdminCategories from './pages/admin/AdminCategories';
 import AdminResults from './pages/admin/AdminResults';
 
-// Protected Route wrapper
+// Protected Route wrapper – saves current path so login redirects back here
 const PrivateRoute = ({ children }) => {
   const { isUser } = useAuth();
-  return isUser() ? children : <Navigate to="/login" replace />;
+  const location = useLocation();
+  return isUser() ? children : <Navigate to="/login" state={{ from: location.pathname }} replace />;
 };
+
 
 const AdminRoute = ({ children }) => {
   const { isAdmin } = useAuth();
